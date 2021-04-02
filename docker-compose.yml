@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  php:
+    image: webdevops/php-nginx-dev:7.4
+    container_name: boldking_php
+    volumes:
+      - ./src:/src
+    working_dir: /src
+    ports:
+      - "8080:80"
+    environment:
+      - WEB_DOCUMENT_ROOT=/src/public
+
+  mysql:
+    image: mysql:5.7
+    container_name: boldking_mysql
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_DATABASE=boldking
+    ports:
+      - "33306:3306"
