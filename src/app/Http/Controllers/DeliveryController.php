@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\DeliveryService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DeliveryController extends Controller
 {
@@ -17,7 +18,7 @@ class DeliveryController extends Controller
         $this->deliveryService = $deliveryService;
     }
 
-    public function exportDeliveries()
+    public function exportDeliveries(): StreamedResponse
     {
         $headers = array(
             "Content-type" => "text/csv",

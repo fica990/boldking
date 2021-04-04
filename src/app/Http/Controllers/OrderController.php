@@ -20,7 +20,7 @@ class OrderController extends Controller
     }
 
 
-    public function create()
+    public function create(): JsonResponse
     {
         $result = $this->orderService->create();
 
@@ -32,7 +32,7 @@ class OrderController extends Controller
     }
 
 
-    public function getLastPaidOrder(Request $request)
+    public function getLastPaidOrder(Request $request): JsonResponse
     {
         $customerId = $request->route('id');
 
@@ -42,7 +42,7 @@ class OrderController extends Controller
     }
 
 
-    public function payOrder(Request $request)
+    public function payOrder(Request $request): JsonResponse
     {
         $orderId = $request->route('id');
         $result = $this->orderService->payOrder($orderId);

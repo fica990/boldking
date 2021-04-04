@@ -20,7 +20,7 @@ class SubscriptionController extends Controller
     }
 
 
-    public function updateSubscription(Request $request)
+    public function updateSubscription(Request $request): JsonResponse
     {
         $customerId = $request->route('id');
         $requestData = $request->input();

@@ -1,1 +1,1 @@
-CREATE DATABASE IF NOT EXISTS boldking;
+CREATE DATABASE IF NOT EXISTS boldking_task_filip;

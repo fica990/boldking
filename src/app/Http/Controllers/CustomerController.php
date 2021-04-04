@@ -19,7 +19,7 @@ class CustomerController extends Controller
     }
 
 
-    public function getCustomersWithMultiplePaidOrders()
+    public function getCustomersWithMultiplePaidOrders(): JsonResponse
     {
         $customers = $this->customerService->getCustomersWithMultiplePaidOrders();
 
@@ -27,7 +27,7 @@ class CustomerController extends Controller
     }
 
 
-    public function getSubbedCustomersWithPaidOrders()
+    public function getSubbedCustomersWithPaidOrders(): JsonResponse
     {
         $customers = $this->customerService->getSubbedCustomersWithPaidOrders();
 

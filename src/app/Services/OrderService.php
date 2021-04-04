@@ -10,6 +10,7 @@ use App\Repositories\Delivery\DeliveryRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Subscription\SubscriptionRepositoryInterface;
 use http\Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class OrderService
@@ -79,9 +80,7 @@ class OrderService
         $updatedOrder = $this->orderRepository->update($data, $order);
 
         //create new delivery
-        $newDelivery = $this->deliveryRepository->create([
-            'order_id' => $orderId,
-        ]);
+        $newDelivery = $this->createNewDelivery($orderId);
 
         return ['success' => true, 'order' => $updatedOrder, 'new_delivery' => $newDelivery];
     }
@@ -113,5 +112,12 @@ class OrderService
         $addedDays = $nextOrderDate->addDays($subscription->day_iteration);
 
         $this->subscriptionRepository->update(['nextorder_date' => $addedDays->toDateString()], $subscription->id);
+    }
+
+    private function createNewDelivery(int $orderId): Model
+    {
+        return $this->deliveryRepository->create([
+            'order_id' => $orderId,
+        ]);
     }
 }
