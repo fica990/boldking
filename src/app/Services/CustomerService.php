@@ -26,9 +26,9 @@ class CustomerService
     }
 
 
-    public function getCustomers()
+    public function getSubbedCustomersWithPaidOrders()
     {
-        return $this->customerRepository->getCustomers();
+        return $this->customerRepository->getSubbedCustomersWithPaidOrders();
     }
 
 

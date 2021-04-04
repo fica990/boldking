@@ -6,6 +6,11 @@ namespace App\Repositories;
 
 abstract class EloquentBaseRepository extends BaseRepository
 {
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function findBy(array $data, string $order = null, bool $takeOne = false)
     {
         $query = $this->model->where($data);

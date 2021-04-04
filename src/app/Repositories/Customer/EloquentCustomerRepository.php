@@ -8,7 +8,6 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Repositories\EloquentBaseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class EloquentCustomerRepository extends EloquentBaseRepository implements CustomerRepositoryInterface
 {
@@ -20,7 +19,7 @@ class EloquentCustomerRepository extends EloquentBaseRepository implements Custo
     }
 
 
-    public function getCustomers(): Collection
+    public function getSubbedCustomersWithPaidOrders(): Collection
     {
         return $this->model::whereHas('orders', function ($query) {
             $query->where('status', Order::STATUS_PAID);

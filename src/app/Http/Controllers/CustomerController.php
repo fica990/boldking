@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -28,10 +27,9 @@ class CustomerController extends Controller
     }
 
 
-    //TODO promeni naziv
-    public function getCustomers()
+    public function getSubbedCustomersWithPaidOrders()
     {
-        $customers = $this->customerService->getCustomers();
+        $customers = $this->customerService->getSubbedCustomersWithPaidOrders();
 
         return new JsonResponse($customers, 200);
     }

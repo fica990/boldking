@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Delivery extends Model
 {
+    public $timestamps = false;
     public $guarded = [];
 
     const STATUS_PENDING = 0;

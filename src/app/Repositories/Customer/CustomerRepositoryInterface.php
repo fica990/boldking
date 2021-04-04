@@ -10,5 +10,5 @@ interface CustomerRepositoryInterface
 {
     public function getCustomersWithMultiplePaidOrders(): Collection;
 
-    public function getCustomers(): Collection;
+    public function getSubbedCustomersWithPaidOrders(): Collection;
 }

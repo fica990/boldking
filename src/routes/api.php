@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SubscriptionController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,22 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-//TODO smisli bolje rute
-//1, 2, 3
+//Tasks 1, 2, 3
 Route::post('/order', [OrderController::class, 'create']);
 Route::put('/customers/{id}/subscription', [SubscriptionController::class, 'updateSubscription']);
 
-//4
+//Task 4
 Route::get('/customers/{id}/last-paid-order', [OrderController::class, 'getLastPaidOrder']);
 
-//5
+//Task 5
 Route::get('/customers/multiple-paid-orders', [CustomerController::class, 'getCustomersWithMultiplePaidOrders']);
 
-//6
-Route::get('/customers/active-sub/paid-order', [CustomerController::class, 'getCustomers']);
+//Task 6
+Route::get('/customers/subbed-with-paid-order', [CustomerController::class, 'getSubbedCustomersWithPaidOrders']);
 
-//Bonus - Delivery
+//Bonus task - Delivery, pay order
 Route::post('/orders/{id}/pay', [OrderController::class, 'payOrder']);
+
+//Bonus task - Delivery csv export
+Route::get('/deliveries/export', [DeliveryController::class, 'exportDeliveries']);
