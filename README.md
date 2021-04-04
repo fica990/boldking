@@ -4,7 +4,7 @@ Get project from https://github.com/fica990/boldking.git
 
 `git clone https://github.com/fica990/boldking.git`
 
-Edit /etc/hosts file and add (for example) boldking.local for 127.0.0.1
+Edit **/etc/hosts** file and add (for example) boldking.local for 127.0.0.1
 
 Create **.env** based on **.env.example**, and edit database section:
 
@@ -20,12 +20,19 @@ Start docker for the first time by running this script located in project root
 `sh setup.sh`
 
 the script will:
+* start docker
 * install composer
 * generate app key
 * create a database (named **boldking_task_filip**)
 * run migrations
 ---
-### Routes (I've also provided Insomnia export with routes)
+
+I've included Insomnia export file with routes
+
+It's located in **insomnia_routes_export** folder
+
+---
+### Routes
 
 #### Tasks 1, 2
 
