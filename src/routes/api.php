@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//TODO smisli bolje rute
 //1, 2, 3
 Route::post('/order', [OrderController::class, 'create']);
 Route::put('/customers/{id}/subscription', [SubscriptionController::class, 'updateSubscription']);
@@ -33,5 +34,5 @@ Route::get('/customers/multiple-paid-orders', [CustomerController::class, 'getCu
 //6
 Route::get('/customers/active-sub/paid-order', [CustomerController::class, 'getCustomers']);
 
-//nista
-Route::get('/customers', [CustomerController::class, 'all']);
+//Bonus - Delivery
+Route::post('/orders/{id}/pay', [OrderController::class, 'payOrder']);

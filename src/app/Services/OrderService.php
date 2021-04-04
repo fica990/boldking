@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Order;
+use App\Models\Subscription;
+use App\Repositories\Delivery\DeliveryRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Subscription\SubscriptionRepositoryInterface;
 use http\Exception;
@@ -14,16 +16,23 @@ class OrderService
 {
     private $orderRepository;
     private $subscriptionRepository;
+    private $deliveryRepository;
 
     /**
      * OrderService constructor.
      * @param OrderRepositoryInterface $orderRepository
      * @param SubscriptionRepositoryInterface $subscriptionRepository
+     * @param DeliveryRepositoryInterface $deliveryRepository
      */
-    public function __construct(OrderRepositoryInterface $orderRepository, SubscriptionRepositoryInterface $subscriptionRepository)
+    public function __construct(
+        OrderRepositoryInterface $orderRepository,
+        SubscriptionRepositoryInterface $subscriptionRepository,
+        DeliveryRepositoryInterface $deliveryRepository
+    )
     {
         $this->orderRepository = $orderRepository;
         $this->subscriptionRepository = $subscriptionRepository;
+        $this->deliveryRepository = $deliveryRepository;
     }
 
 
@@ -42,10 +51,7 @@ class OrderService
         }
 
         //update subs next date
-        $nextOrderDate = Carbon::make($data['subscription']->nextorder_date);
-        $addedDays = $nextOrderDate->addDays($data['subscription']->day_iteration);
-
-        $this->subscriptionRepository->updateSubscription(['nextorder_date' => $addedDays->format('Y-m-d')], $data['subscription']);
+        $this->updateSubscriptionNextOrderDate($data['subscription']);
 
         return ['success' => true, 'model' => $newOrder];
     }
@@ -57,9 +63,27 @@ class OrderService
     }
 
 
-    public function getMultiplePaidOrders()
+    public function payOrder(int $orderId)
     {
-        
+        $data = [
+            'status' => Order::STATUS_PAID,
+            'paid_date' => Carbon::now()->toDateString()
+        ];
+
+        $order = $this->orderRepository->find($orderId);
+
+        if (!$order || $order->status === Order::STATUS_PAID) {
+            return ['success' => false, 'error' => 'Order not found or already paid'];
+        }
+
+        $updatedOrder = $this->orderRepository->update($data, $order);
+
+        //create new delivery
+        $newDelivery = $this->deliveryRepository->create([
+            'order_id' => $orderId,
+        ]);
+
+        return ['success' => true, 'order' => $updatedOrder, 'new_delivery' => $newDelivery];
     }
 
 
@@ -81,5 +105,13 @@ class OrderService
             ],
             'subscription' => $subscription
         ];
+    }
+
+    private function updateSubscriptionNextOrderDate(Subscription $subscription): void
+    {
+        $nextOrderDate = Carbon::make($subscription->nextorder_date);
+        $addedDays = $nextOrderDate->addDays($subscription->day_iteration);
+
+        $this->subscriptionRepository->update(['nextorder_date' => $addedDays->toDateString()], $subscription->id);
     }
 }

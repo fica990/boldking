@@ -19,6 +19,7 @@ class SubscriptionController extends Controller
         $this->subscriptionService = $subscriptionService;
     }
 
+
     public function updateSubscription(Request $request)
     {
         $customerId = $request->route('id');

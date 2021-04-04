@@ -12,19 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EloquentCustomerRepository extends EloquentBaseRepository implements CustomerRepositoryInterface
 {
-    public function all(): Collection
-    {
-//        return $this->model::all();
-        return $this->model->all();
-    }
-
-
-    public function show(int $customerId): Model
-    {
-        return $this->model->with('orders')->findOrFail($customerId);
-    }
-
-
     public function getCustomersWithMultiplePaidOrders(): Collection
     {
         return $this->model::whereHas('orders', function ($query) {

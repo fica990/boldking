@@ -4,9 +4,7 @@
 namespace App\Services;
 
 
-use App\Models\Subscription;
 use App\Repositories\Subscription\SubscriptionRepositoryInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SubscriptionService
 {
@@ -24,13 +22,13 @@ class SubscriptionService
 
     public function updateIteration(int $customerId, array $data)
     {
-        try {
-            $subscriptionToUpdate = $this->subscriptionRepository->findBy(['customer_id' => $customerId], null, true);
-        } catch (ModelNotFoundException $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        $subscriptionToUpdate = $this->subscriptionRepository->findBy(['customer_id' => $customerId], null, true);
+
+        if (!$subscriptionToUpdate) {
+            return ['success' => false, 'error' => 'Subscription not found'];
         }
 
-        $updatedSubscription = $this->subscriptionRepository->updateSubscription($data, $subscriptionToUpdate);
+        $updatedSubscription = $this->subscriptionRepository->update($data, $subscriptionToUpdate->id);
 
         return ['success' => true, 'model' => $updatedSubscription];
     }

@@ -20,12 +20,6 @@ class CustomerController extends Controller
     }
 
 
-    public function all()
-    {
-        return new JsonResponse($this->customerService->all());
-    }
-
-
     public function getCustomersWithMultiplePaidOrders()
     {
         $customers = $this->customerService->getCustomersWithMultiplePaidOrders();
@@ -34,6 +28,7 @@ class CustomerController extends Controller
     }
 
 
+    //TODO promeni naziv
     public function getCustomers()
     {
         $customers = $this->customerService->getCustomers();

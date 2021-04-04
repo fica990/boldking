@@ -20,12 +20,6 @@ class CustomerService
     }
 
 
-    public function all()
-    {
-        return $this->customerRepository->all();
-    }
-
-
     public function getCustomersWithMultiplePaidOrders()
     {
         return $this->customerRepository->getCustomersWithMultiplePaidOrders();

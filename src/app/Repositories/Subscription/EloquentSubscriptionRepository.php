@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EloquentSubscriptionRepository extends EloquentBaseRepository implements SubscriptionRepositoryInterface
 {
-    public function updateSubscription(array $data, Subscription $subscription): Model
+    public function update(array $data, int $subscriptionId): Model
     {
+        $subscription = $this->model->findOrFail($subscriptionId);
         $subscription->fill($data)->save();
 
         return $subscription;

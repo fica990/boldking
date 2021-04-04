@@ -18,6 +18,15 @@ class EloquentOrderRepository extends EloquentBaseRepository implements OrderRep
         return $newOrder;
     }
 
+
+    public function update(array $data, Order $order): Model
+    {
+        $order->fill($data)->save();
+
+        return $order;
+    }
+
+
     protected function getModelResource(): string
     {
         return Order::class;

@@ -40,4 +40,17 @@ class OrderController extends Controller
 
         return new JsonResponse($order, 200);
     }
+
+
+    public function payOrder(Request $request)
+    {
+        $orderId = $request->route('id');
+        $result = $this->orderService->payOrder($orderId);
+
+        if (!$result['success']) {
+            return new JsonResponse($result['error'], 422);
+        }
+
+        return new JsonResponse($result, 200);
+    }
 }
